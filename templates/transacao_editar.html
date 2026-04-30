@@ -1,0 +1,44 @@
+{% extends "_base.html" %}
+
+{% block conteudo %}
+
+<h3>Editar Transação</h3>
+
+{% if erro %}
+    <div>{{ erro }}</div>
+{% endif %}
+
+
+<form action="transacao_editar.php" method="post">
+    <input type="hidden" name="id" value="{{ transacao.id }}">
+    <div>
+        <label for="descricao">Descrição</label>
+        <input type="text" name="descricao" id="descricao" value="{{ transacao.descricao }}" placeholder="Digite a descrição aqui...">
+    </div>
+    <div>
+        <label for="valor">Valor</label>
+        <input type="number" name="valor" id="valor" value="{{ transacao.valor }}" placeholder="Digite o valor aqui..." step="0.01">
+    </div>
+    <div>
+        <label for="data_transacao">Data da Transação</label>
+        <input type="date" name="data_transacao" id="data_transacao" value="{{ transacao.data_transacao }}">
+    </div>
+    <div>
+        <label for="tipo">Tipo</label>
+        <select name="tipo" id="tipo">
+            <option value="entrada"{% if transacao.tipo == 'entrada' %} selected{% endif %}>Entrada</option>
+            <option value="saida"{% if transacao.tipo == 'saida' %} selected{% endif %}>Saída</option>
+        </select>
+    </div>
+    <div>
+        <label for="categoria">Categoria</label>
+        <select name="categoria" id="categoria">
+            {% for key, label in categorias %}
+                <option value="{{ key }}"{% if transacao.categoria == key %} selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit">Editar</button>
+</form>
+
+{% endblock %}

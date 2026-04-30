@@ -44,6 +44,8 @@
                 <th>Data Transação</th>
                 <th>Tipo</th>
                 <th>Categoria</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +56,8 @@
                 <td>{{ transacao.data_transacao|date('d/m/Y') }}</td>
                 <td>{{ tipo[transacao.tipo] }}</td>
                 <td>{{ categoria[transacao.categoria] ?? transacao.categoria }}</td>
+                <td><a href="transacao_editar.php?id={{ transacao.id }}">Editar</a></td>
+                <td><a href="transacao_excluir.php?id={{ transacao.id }}">Excluir</a></td>
             </tr>
             {% endfor %}
         </tbody>
