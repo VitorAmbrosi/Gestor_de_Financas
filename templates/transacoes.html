@@ -3,25 +3,61 @@
 {% block conteudo %}
 
 
-{% set tipo = {
-'salario': 'Salário',
-'renda_extra': 'Renda Extra',
-'freelance': 'Freelance',
-'investimento': 'Investimento',
-'resgate': 'Resgate',
-'alimentacao': 'Alimentação',
-'moradia': 'Moradia',
-'transporte': 'Transporte',
-'saude': 'Saúde',
-'educacao': 'Educação',
-'lazer': 'Lazer',
-'vestuario': 'Vestuário',
-'contas': 'Contas e Utilidades',
-'assinaturas': 'Assinaturas',
-'cartao_credito': 'Cartão de Crédito',
-'transferencia': 'Transferência',
-'outros': 'Outros',
+{% set categoria = {
+    'salario': 'Salário',
+    'renda_extra': 'Renda Extra',
+    'freelance': 'Freelance',
+    'investimento': 'Investimento',
+    'resgate': 'Resgate',
+    'alimentacao': 'Alimentação',
+    'moradia': 'Moradia',
+    'transporte': 'Transporte',
+    'saude': 'Saúde',
+    'educacao': 'Educação',
+    'lazer': 'Lazer',
+    'vestuario': 'Vestuário',
+    'contas': 'Contas e Utilidades',
+    'assinaturas': 'Assinaturas',
+    'cartao_credito': 'Cartão de Crédito',
+    'transferencia': 'Transferência',
+    'outros': 'Outros',
 } %}
 
+{% set tipo = {
+    'entrada': 'Entrada',
+    'saida': 'Saída'
+} %}
+
+<h3>Finanças</h3>
+
+<header>
+    <div id="saldoFinal"></div>
+    <a href="transacao_inserir.php">+ Nova transação</a>
+</header>
+
+<main>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data Transação</th>
+                <th>Tipo</th>
+                <th>Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transacao in transacoes %}
+            <tr>
+                <td>{{ transacao.descricao }}</td>
+                <td>{{ transacao.valor|number_format(2, ',', '.') }}</td>
+                <td>{{ transacao.data_transacao|date('d/m/Y') }}</td>
+                <td>{{ tipo[transacao.tipo] }}</td>
+                <td>{{ categoria[transacao.categoria] ?? transacao.categoria }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
 
 {% endblock %}

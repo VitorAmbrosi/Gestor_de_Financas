@@ -1,0 +1,41 @@
+{% extends "_base.html" %}
+
+{% block conteudo %}
+
+{% if erro %}
+    <div>{{ erro }}</div>
+{% endif %}
+
+
+<form action="transacao_inserir.php" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="descricao">Descrição</label>
+        <input type="text" name="descricao" placeholder="Digite a descrição aqui...">
+    </div>
+    <div>
+        <label for="valor">Valor</label>
+        <input type="number" name="valor" placeholder="Digite o valor aqui..." step="0.01">
+    </div>
+    <div>
+        <label for="data_transacao">Data da Transação</label>
+        <input type="date" name="data_transacao">
+    </div>
+    <div>
+        <label for="tipo">Tipo</label>
+        <select name="tipo" id="tipo">
+            <option value="entrada">Entrada</option>
+            <option value="saida">Saída</option>
+        </select>
+    </div>
+    <div>
+        <label for="categoria">Categoria</label>
+        <select name="categoria" id="categoria">
+            {% for key, label in categorias %}
+                <option value="{{ key }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit">Adicionar</button>
+</form>
+
+{% endblock %}

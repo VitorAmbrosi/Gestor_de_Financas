@@ -1,8 +1,3 @@
--- ============================================
--- Sistema de Controle de Finanças Pessoais
--- Script de Criação do Banco de Dados MySQL
--- ============================================
- 
 CREATE DATABASE IF NOT EXISTS financas_pessoais
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
@@ -24,12 +19,12 @@ CREATE TABLE IF NOT EXISTS transacoes (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  
 -- Dados de exemplo
-INSERT INTO transacoes (descricao, valor, tipo, categoria, data_transacao) VALUES
-('Salário mensal',       5500.00, 'entrada', 'Salário',       CURDATE()),
-('Aluguel apartamento',  1800.00, 'saida',   'Moradia',       CURDATE()),
-('Freelance design',      950.00, 'entrada', 'Freelance',     CURDATE()),
-('Supermercado',          420.50, 'saida',   'Alimentação',   CURDATE()),
-('Conta de luz',          185.00, 'saida',   'Utilidades',    CURDATE()),
-('Streaming serviços',     55.90, 'saida',   'Lazer',         CURDATE()),
-('Dividendos ações',      310.00, 'entrada', 'Investimentos', CURDATE()),
-('Academia',               99.90, 'saida',   'Saúde',         CURDATE());
+-- INSERT INTO transacoes (descricao, valor, tipo, categoria, data_transacao) VALUES
+-- ('Salário mensal',       5500.00, 'entrada', 'Salário',       CURDATE()),
+-- ('Aluguel apartamento',  1800.00, 'saida',   'Moradia',       CURDATE()),
+-- ('Freelance design',      950.00, 'entrada', 'Freelance',     CURDATE()),
+-- ('Supermercado',          420.50, 'saida',   'Alimentação',   CURDATE()),
+-- ('Conta de luz',          185.00, 'saida',   'Utilidades',    CURDATE()),
+-- ('Streaming serviços',     55.90, 'saida',   'Lazer',         CURDATE()),
+-- ('Dividendos ações',      310.00, 'entrada', 'Investimentos', CURDATE()),
+-- ('Academia',               99.90, 'saida',   'Saúde',         CURDATE());
