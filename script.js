@@ -6,6 +6,8 @@ function calcularSaldo() {
   let saldo = 0
 
   linhas.forEach((linha) => {
+    if (linha.style.display === 'none') return
+
     const colunas = linha.querySelectorAll('td')
     if (colunas.length < 4) return
 
@@ -93,9 +95,39 @@ function limparErro(campo) {
   }
 }
 
+function iniciarFiltros() {
+  const botoes = document.querySelectorAll('.filtro-btn')
+  if (botoes.length === 0) return
+
+  botoes.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filtro = btn.dataset.filtro
+
+      botoes.forEach((b) => {
+        b.classList.remove('bg-slate-800', 'text-white')
+        b.classList.add('bg-white', 'border', 'border-slate-300', 'text-slate-600')
+      })
+      btn.classList.add('bg-slate-800', 'text-white')
+      btn.classList.remove('bg-white', 'border', 'border-slate-300', 'text-slate-600')
+
+      document.querySelectorAll('tbody tr').forEach((linha) => {
+        if (filtro === 'todos' || linha.dataset.tipo === filtro) {
+          linha.style.display = ''
+        } else {
+          linha.style.display = 'none'
+        }
+      })
+
+      calcularSaldo()
+    })
+  })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   calcularSaldo()
+
+  iniciarFiltros()
 
   document.querySelectorAll('form').forEach((form) => {
 

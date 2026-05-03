@@ -35,6 +35,12 @@
     <div id="saldoFinal" class="bg-white border border-slate-200 rounded-xl px-5 py-3 flex items-center gap-3 shadow-sm"></div>
 </div>
 
+<div class="flex gap-2 mb-4">
+    <button data-filtro="todos" class="filtro-btn bg-slate-800 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Todos</button>
+    <button data-filtro="entrada" class="filtro-btn bg-white border border-slate-300 text-slate-600 text-xs font-medium px-3 py-1.5 rounded-lg">Entradas</button>
+    <button data-filtro="saida" class="filtro-btn bg-white border border-slate-300 text-slate-600 text-xs font-medium px-3 py-1.5 rounded-lg">Saídas</button>
+</div>
+
 <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
     <table class="w-full text-sm">
         <thead>
@@ -49,7 +55,7 @@
         </thead>
         <tbody class="divide-y divide-slate-100">
             {% for transacao in transacoes %}
-            <tr class="hover:bg-slate-50 transition-colors">
+            <tr class="hover:bg-slate-50 transition-colors" data-tipo="{{ transacao.tipo }}">
                 <td class="px-5 py-3.5 font-medium text-slate-800">{{ transacao.descricao }}</td>
                 <td class="px-5 py-3.5 text-right font-mono font-semibold {% if transacao.tipo == 'entrada' %}text-emerald-600{% else %}text-red-500{% endif %}">
                     {% if transacao.tipo == 'saida' %}-{% endif %}R$ {{ transacao.valor|number_format(2, ',', '.') }}
@@ -79,7 +85,7 @@
                 </td>
             </tr>
             {% else %}
-            <tr>
+            <tr data-tipo="{{ transacao.tipo }}">
                 <td colspan="6" class="px-5 py-12 text-center text-slate-400 text-sm">
                     Nenhuma transação encontrada. <a href="transacao_inserir.php" class="text-emerald-600 font-medium hover:underline">Adicionar primeira transação</a>
                 </td>
