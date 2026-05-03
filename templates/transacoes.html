@@ -2,7 +2,6 @@
 
 {% block conteudo %}
 
-
 {% set categoria = {
     'salario': 'Salário',
     'renda_extra': 'Renda Extra',
@@ -28,40 +27,66 @@
     'saida': 'Saída'
 } %}
 
-<h3>Finanças</h3>
+<div class="mb-6 flex items-center justify-between">
+    <div>
+        <h2 class="text-2xl font-bold text-slate-800">Transações</h2>
+        <p class="text-sm text-slate-500 mt-1">Histórico de todas as movimentações</p>
+    </div>
+    <div id="saldoFinal" class="bg-white border border-slate-200 rounded-xl px-5 py-3 flex items-center gap-3 shadow-sm"></div>
+</div>
 
-<header>
-    <div id="saldoFinal"></div>
-    <a href="transacao_inserir.php">+ Nova transação</a>
-</header>
-
-<main>
-    <table>
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <table class="w-full text-sm">
         <thead>
-            <tr>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Data Transação</th>
-                <th>Tipo</th>
-                <th>Categoria</th>
-                <th></th>
-                <th></th>
+            <tr class="bg-slate-50 border-b border-slate-200">
+                <th class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-5 py-3">Descrição</th>
+                <th class="text-right text-xs font-semibold text-slate-500 uppercase tracking-wide px-5 py-3">Valor</th>
+                <th class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-5 py-3">Data</th>
+                <th class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-5 py-3">Tipo</th>
+                <th class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide px-5 py-3">Categoria</th>
+                <th class="px-5 py-3"></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="divide-y divide-slate-100">
             {% for transacao in transacoes %}
+            <tr class="hover:bg-slate-50 transition-colors">
+                <td class="px-5 py-3.5 font-medium text-slate-800">{{ transacao.descricao }}</td>
+                <td class="px-5 py-3.5 text-right font-mono font-semibold {% if transacao.tipo == 'entrada' %}text-emerald-600{% else %}text-red-500{% endif %}">
+                    {% if transacao.tipo == 'saida' %}-{% endif %}R$ {{ transacao.valor|number_format(2, ',', '.') }}
+                </td>
+                <td class="px-5 py-3.5 text-slate-500">{{ transacao.data_transacao|date('d/m/Y') }}</td>
+                <td class="px-5 py-3.5">
+                    {% if transacao.tipo == 'entrada' %}
+                        <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full">
+                            ↑ Entrada
+                        </span>
+                    {% else %}
+                        <span class="inline-flex items-center gap-1 bg-red-50 text-red-600 text-xs font-semibold px-2.5 py-1 rounded-full">
+                            ↓ Saída
+                        </span>
+                    {% endif %}
+                </td>
+                <td class="px-5 py-3.5">
+                    <span class="bg-slate-100 text-slate-600 text-xs font-medium px-2.5 py-1 rounded-full">
+                        {{ categoria[transacao.categoria] ?? transacao.categoria }}
+                    </span>
+                </td>
+                <td class="px-5 py-3.5">
+                    <div class="flex items-center gap-3 justify-end">
+                        <a href="transacao_editar.php?id={{ transacao.id }}" class="text-slate-400 hover:text-emerald-600 transition-colors text-xs font-medium">Editar</a>
+                        <a href="transacao_excluir.php?id={{ transacao.id }}" class="text-slate-400 hover:text-red-500 transition-colors text-xs font-medium">Excluir</a>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
             <tr>
-                <td>{{ transacao.descricao }}</td>
-                <td>{{ transacao.valor|number_format(2, ',', '.') }}</td>
-                <td>{{ transacao.data_transacao|date('d/m/Y') }}</td>
-                <td>{{ tipo[transacao.tipo] }}</td>
-                <td>{{ categoria[transacao.categoria] ?? transacao.categoria }}</td>
-                <td><a href="transacao_editar.php?id={{ transacao.id }}">Editar</a></td>
-                <td><a href="transacao_excluir.php?id={{ transacao.id }}">Excluir</a></td>
+                <td colspan="6" class="px-5 py-12 text-center text-slate-400 text-sm">
+                    Nenhuma transação encontrada. <a href="transacao_inserir.php" class="text-emerald-600 font-medium hover:underline">Adicionar primeira transação</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</main>
+</div>
 
 {% endblock %}
