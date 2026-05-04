@@ -35,7 +35,7 @@ function calcularSaldo() {
   })
 
   container.innerHTML = `
-    <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Saldo atual:</span>
+    <span class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Saldo Final:</span>
     <span class="text-lg font-bold ${positivo ? 'text-green-600' : 'text-red-600'}">
       ${positivo ? '' : '- '}R$ ${valorFormatado}
     </span>
